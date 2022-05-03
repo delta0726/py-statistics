@@ -1,10 +1,11 @@
-# ***************************************************************************************
-# Title     : あたらしいPythonで学ぶ統計学の教科書
-# Chapter   : 3-3 matplotlib・seabornによるデータの可視化
-# Created by: Owner
-# Created on: 2021/4/17
-# Page      : P129 - P144
-# ***************************************************************************************
+# **************************************************************************************
+# Title   : あたらしいPythonで学ぶ統計学の教科書
+# Chapter : 3 Pythonによるデータ分析
+# Theme   : 3 matplotlib・seabornによるデータの可視化
+# Date    : 2022/05/03
+# Page    : P129 - P144
+# URL     : https://logics-of-blue.com/python-stats-book-support/
+# **************************************************************************************
 
 
 # ＜概要＞
@@ -39,8 +40,8 @@ from matplotlib import pyplot as plt
 
 
 # データ準備
-fish_multi = pd.read_csv("book/new_stat_text/csv/3-3-2-fish_multi_2.csv")
-cov_data = pd.read_csv("book/new_stat_text/csv/3-2-3-cov.csv")
+fish_multi = pd.read_csv("csv/3-3-2-fish_multi_2.csv")
+cov_data = pd.read_csv("csv/3-2-3-cov.csv")
 
 # データロード
 iris = sns.load_dataset("iris")
@@ -111,14 +112,14 @@ plt.show()
 
 # ヒストグラム作成
 # --- bins=1とするとデータの特徴が全くわからない
-sns.distplot(fish_data, bins=1, color='black', kde=False)
+sns.displot(fish_data, bins=1, color='black', kde=False)
 plt.show()
 
 # ヒストグラム作成
 # --- binsは指定せずデフォルトを使う
 # --- kdeをTrue(デフォルト)に指定する
 # --- X軸が頻度ではなく密度に変更されている(norm_hist引数)
-sns.distplot(fish_data, color='black', kde=True)
+sns.displot(fish_data, color='black', kde=True)
 plt.show()
 
 
@@ -135,8 +136,8 @@ length_a = fish_multi.query('species == "A"')["length"]
 length_b = fish_multi.query('species == "B"')["length"]
 
 # ヒストグラムの重ね書き
-sns.distplot(length_a, bins=5, color='black', kde=False)
-sns.distplot(length_b, bins=5, color='black', kde=False)
+sns.displot(length_a, bins=5, color='black', kde=False)
+sns.displot(length_b, bins=5, color='black', kde=False)
 plt.show()
 
 
