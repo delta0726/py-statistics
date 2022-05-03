@@ -40,7 +40,7 @@ from matplotlib import pyplot as plt
 sns.set()
 
 # データ準備
-sales = pd.read_csv("book/new_stat_text/csv/5-3-1-lm-model.csv")
+sales = pd.read_csv("csv/5-3-1-lm-model.csv")
 sales
 
 
