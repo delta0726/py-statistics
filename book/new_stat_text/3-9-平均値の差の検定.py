@@ -1,10 +1,11 @@
-# ***************************************************************************************
-# Title     : あたらしいPythonで学ぶ統計学の教科書
-# Chapter   : 3-9 平均値の差の検定
-# Created by: Owner
-# Created on: 2021/4/23
-# Page      : P212 - P219
-# ***************************************************************************************
+# **************************************************************************************
+# Title   : あたらしいPythonで学ぶ統計学の教科書
+# Chapter : 3 Pythonによるデータ分析
+# Theme   : 9 平均値の差の検定
+# Date    : 2022/05/04
+# Page    : P212 - P219
+# URL     : https://logics-of-blue.com/python-stats-book-support/
+# **************************************************************************************
 
 
 # ＜概要＞
@@ -28,7 +29,7 @@ from scipy import stats
 
 
 # データ準備
-paired_test_data = pd.read_csv("book/new_stat_text/csv/3-9-1-paired-t-test.csv")
+paired_test_data = pd.read_csv("csv/3-9-1-paired-t-test.csv")
 paired_test_data
 
 
