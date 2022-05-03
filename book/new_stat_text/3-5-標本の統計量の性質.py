@@ -1,14 +1,15 @@
-# ***************************************************************************************
-# Title     : あたらしいPythonで学ぶ統計学の教科書
-# Chapter   : 3-5 標本の統計量の性質
-# Created by: Owner
-# Created on: 2021/4/19
-# Page      : P157 - P177
-# ***************************************************************************************
+# **************************************************************************************
+# Title   : あたらしいPythonで学ぶ統計学の教科書
+# Chapter : 3 Pythonによるデータ分析
+# Theme   : 5 標本の統計量の性質
+# Date    : 2022/05/04
+# Page    : P157 - P177
+# URL     : https://logics-of-blue.com/python-stats-book-support/
+# **************************************************************************************
 
 
 # ＜概要＞
-# - サンプリングは通常は1度霧しかできない
+# - サンプリングは通常は1度きりしかできない
 # - シミュレーションを用いることで、サンプリングを何度も繰り返すことができる
 
 
@@ -31,7 +32,6 @@
 # ライブラリ
 import numpy as np
 import pandas as pd
-import scipy as sp
 import seaborn as sns
 
 from scipy import stats
@@ -62,32 +62,36 @@ sample_mean_array = np.zeros(x)
 
 # シミュレーション実行
 # --- 母集団から10個の数値を抽出(平均4、標準偏差0.8の正規分布)
-# --- 小数を含む
+# --- 標本平均を計算して格納（10000回）
 np.random.seed(1)
 for i in range(x):
     sample = population.rvs(size=10)
-    sample_mean_array[i] = sp.mean(sample)
+    sample_mean_array[i] = np.mean(sample)
 
 # 結果確認
+# --- 標本平均が10000個
 sample_mean_array
+len(sample_mean_array)
 
 
 # 2 標本平均の平均値は母平均に近い -------------------------------------------------------
 
 # ＜ポイント＞
 # - ｢サンプルサイズ｣と｢標本平均｣と｢母平均｣の関係を確認する
+#   --- サンプルサイズが増加すると標本平均は母平均に近づく
+#   --- サンプルサイズが増加すると標本平均の標準偏差は小さくなる（平均値が安定してくる）
 
 
 # 標本平均の平均値
 # --- 母平均が4なので、4.004はそれなりに近い値が出力された
-sp.mean(sample_mean_array)
+np.mean(sample_mean_array)
 
 # 標本平均の標準偏差
 # --- 母標準偏差が0.8なので、0.251はかなり小さい値が出力された
-sp.std(sample_mean_array, ddof=1)
+np.std(sample_mean_array, ddof=1)
 
 # ヒストグラム作成
-sns.distplot(sample_mean_array, color='black')
+sns.displot(sample_mean_array, color='black')
 plt.show()
 
 
@@ -118,7 +122,7 @@ len(sample_mean_array_size)
 np.random.seed(1)
 for i in range(0, len(size_array)):
     sample = population.rvs(size=size_array[i])
-    sample_mean_array_size[i] = sp.mean(sample)
+    sample_mean_array_size[i] = np.mean(sample)
 
 # プロット作成
 # --- サンプル数が増えることで標本平均が母平均に収斂していく
@@ -140,13 +144,13 @@ def calc_sample_mean(size, n_trial):
     sample_mean_array = np.zeros(n_trial)
     for i in range(0, n_trial):
         sample = population.rvs(size=size)
-        sample_mean_array[i] = sp.mean(sample)
+        sample_mean_array[i] = np.mean(sample)
     return(sample_mean_array)
 
 
 # 動作確認
 np.random.seed(1)
-sp.mean(calc_sample_mean(size=10, n_trial=10000))
+np.mean(calc_sample_mean(size=10, n_trial=10000))
 
 
 # 5 サンプルサイズを変えたときに標本平均の分布 -----------------------------------------------
@@ -204,7 +208,7 @@ sample_mean_std_array = np.zeros(len(size_array))
 np.random.seed(1)
 for i in range(0, len(size_array)):
     sample_mean = calc_sample_mean(size=size_array[i], n_trial=100)
-    sample_mean_std_array[i] = sp.std(sample_mean, ddof=1)
+    sample_mean_std_array[i] = np.std(sample_mean, ddof=1)
 
 # プロット作成
 plt.plot(size_array, sample_mean_std_array, color="black")
@@ -251,11 +255,11 @@ sample_var_array = np.zeros(10000)
 np.random.seed(1)
 for i in range(0, 10000):
     sample = population.rvs(size=10)
-    sample_var_array[i] = sp.var(sample, ddof=0)
+    sample_var_array[i] = np.var(sample, ddof=0)
 
 # 標本分散の標本平均
 # --- 期待値は0.64 (0.8^2)
-sp.mean(sample_var_array)
+np.mean(sample_var_array)
 
 
 # 9 不偏分散を使うとバイアスがなくなる -----------------------------------------------
@@ -274,11 +278,11 @@ unbias_var_array = np.zeros(10000)
 np.random.seed(1)
 for i in range(0, 10000):
     sample = population.rvs(size=10)
-    unbias_var_array[i] = sp.var(sample, ddof=1)
+    unbias_var_array[i] = np.var(sample, ddof=1)
 
 # 標本分散の標本平均
 # --- 期待値は0.64 (0.8^2)
-sp.mean(unbias_var_array)
+np.mean(unbias_var_array)
 
 
 # 10 サンプルサイズ大なら不偏分散は母分散に近い ------------------------------------
@@ -299,11 +303,11 @@ unbias_var_array_size = np.zeros(len(size_array))
 np.random.seed(1)
 for i in range(0, len(size_array)):
     sample = population.rvs(size=size_array[i])
-    unbias_var_array_size[i] = sp.var(sample, ddof=1)
+    unbias_var_array_size[i] = np.var(sample, ddof=1)
 
 # 不偏分散の標本平均
 # --- 期待値は0.64 (0.8^2)
-sp.mean(unbias_var_array_size)
+np.mean(unbias_var_array_size)
 
 # プロット作成
 plt.plot(size_array, unbias_var_array_size, color="black")
@@ -339,7 +343,7 @@ count_coin = np.zeros(n_trial)
 # --- コインをn_size回投げる試行をn_trial回行う
 np.random.seed(1)
 for i in range(0, n_trial):
-    count_coin[i] = sp.sum(np.random.choice(coin, size=n_size, replace=True))
+    count_coin[i] = np.sum(np.random.choice(coin, size=n_size, replace=True))
 
 # プロット作成
 # --- ヒストグラム
