@@ -1,10 +1,11 @@
-# ***************************************************************************************
-# Title     : あたらしいPythonで学ぶ統計学の教科書
-# Chapter   : 3-4 母集団からの標本抽出シミュレーション
-# Created by: Owner
-# Created on: 2021/4/18
-# Page      : P145 - P156
-# ***************************************************************************************
+# **************************************************************************************
+# Title   : あたらしいPythonで学ぶ統計学の教科書
+# Chapter : 3 Pythonによるデータ分析
+# Theme   : 4 母集団からの標本抽出シミュレーション
+# Date    : 2022/05/04
+# Page    : P145 - P156
+# URL     : https://logics-of-blue.com/python-stats-book-support/
+# **************************************************************************************
 
 
 # ＜概要＞
@@ -27,7 +28,6 @@
 # ライブラリ
 import numpy as np
 import pandas as pd
-import scipy as sp
 
 from scipy import stats
 from matplotlib import pyplot as plt
@@ -38,10 +38,15 @@ import seaborn as sns
 sns.set()
 
 # データ準備
-fish_100000 = pd.read_csv("book/new_stat_text/csv/3-4-1-fish_length_100000.csv")["length"]
+fish_100000 = pd.read_csv("csv/3-4-1-fish_length_100000.csv")["length"]
 
 
 # 1 5尾の魚しかいない湖からの標本抽出 ------------------------------------------------------
+
+# ＜ポイント＞
+# - 標本は確率変数で母集団からサンプリングしたものとして扱う
+#   --- 池から魚を釣ってサンプルを取得するイメージ（データは魚の大きさ）
+
 
 # データ作成
 fish_5 = np.array([2, 3, 4, 5, 6])
@@ -56,6 +61,7 @@ np.random.choice(fish_5, size=1, replace=False)
 np.random.choice(fish_5, size=3, replace=False)
 
 # シード設定をして抽出
+# --- 再現性を担保
 np.random.seed(1)
 print(np.random.choice(fish_5, size=3, replace=False))
 np.random.seed(1)
@@ -63,7 +69,7 @@ print(np.random.choice(fish_5, size=3, replace=False))
 
 # 標本平均
 np.random.seed(1)
-sp.mean(np.random.choice(fish_5, size=3, replace=False))
+np.mean(np.random.choice(fish_5, size=3, replace=False))
 
 
 # 2 もっとたくさんの魚がいる湖からの標本抽出 ------------------------------------------------
@@ -81,7 +87,7 @@ len(fish_100000)
 sampling_result = np.random.choice(fish_100000, size=10, replace=False)
 
 # 標本平均
-sp.mean(sampling_result)
+np.mean(sampling_result)
 
 
 # 3 母集団分布 ------------------------------------------------------------------------
@@ -96,24 +102,22 @@ fish_100000
 
 # 母平均
 # --- 4匹ちょうど
-sp.mean(fish_100000)
+np.mean(fish_100000)
 
 # 母標準偏差
-sp.std(fish_100000, ddof=0)
+np.std(fish_100000, ddof=0)
 
 # 母分散
-sp.var(fish_100000, ddof=0)
+np.var(fish_100000, ddof=0)
 
 # ヒストグラム作成
-sns.distplot(fish_100000, kde=False, color='black')
+sns.displot(fish_100000, kde=False, color='black')
 plt.show()
 
 
 # 4 母集団分布と正規分布の確率密度関数の比較 ----------------------------------------------
 
 # 数列の生成
-# --- パソコンでシミュレーションする際は実数を生成する
-# --- 数学のように公式で抽象的に表現するわけでない
 x = np.arange(start=1, stop=7.1, step=0.1)
 x
 
@@ -127,7 +131,7 @@ plt.show()
 
 # 正規分布と母集団の比較
 # --- norm_hist=Trueで母集団全体の面積を1とする
-sns.distplot(fish_100000, kde=False, norm_hist=True, color='black')
+sns.displot(fish_100000, kde=False, color='black')
 plt.plot(x, y, color='black')
 plt.show()
 
@@ -139,17 +143,17 @@ plt.show()
 #   --- 乱数を生成した作成した正規分布と同じ形状であることを根拠とする
 #   --- 無限に母集団を増やしていくと理論分布に近づく（たとえば10万⇒10億）
 
-# 正規乱数を直接生成
+# 正規乱数を直接的に生成
 # --- fish_100000も以下のプロセスから作成されたデータ
 # --- 今回は10サンプルのみで標本データとする
 sampling_norm = stats.norm.rvs(loc=4, scale=0.8, size=10)
 sampling_norm
 
 # 標本平均
-sp.mean(sampling_norm)
+np.mean(sampling_norm)
 
 # 標本標準偏差
-sp.std(sampling_norm)
+np.std(sampling_norm)
 
 
 # 6 有限母集団修正 --------------------------------------------------------------------
@@ -157,6 +161,7 @@ sp.std(sampling_norm)
 # ＜ポイント＞
 # - 母集団が有限である場合、標本平均の分散の算出において｢有限母集団修正｣を行う必要がある
 #   --- ｢データを抜き取るごとに、母集団に残るデータ数が減っていく｣ことへの対処
+#   --- 有限母集団で非復元抽出をする場合に修正が必要となる
 
 # ＜参考＞
 # 有限母集団修正はいつ必要なのかをわかりやすく説明する記事
@@ -175,5 +180,5 @@ sp.std(sampling_norm)
 
 # ＜結論＞
 # - ｢頻度ベースの統計学｣では母集団に対して分布の仮定をおくのがセオリー
-#   --- 仮定した分布の性質をもとに統計学の理論展開に持ち込めるため
+#   --- 仮定した分布の性質をもとに統計学の理論展開に持ち込むことができる
 #   --- ｢ベイズ統計学｣は分布をシミュレーションで生成
