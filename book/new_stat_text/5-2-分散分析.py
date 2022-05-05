@@ -20,8 +20,8 @@
 
 
 # ＜目次＞
-# 0 分散分析とは
-# 1 準備
+# 0 準備
+# 1 分散分析とは
 # 2 データ作成
 # 3 群間/郡内平方和の計算
 # 4 群間/郡内分散とF値の計算
@@ -31,7 +31,26 @@
 # 8 回帰モデルによる分散分析
 
 
-# 0 分散分析とは -----------------------------------------------------------------------
+# 0 準備 -------------------------------------------------------------------------------
+
+# ライブラリ
+import pandas as pd
+import numpy as np
+import scipy as sp
+import seaborn as sns
+
+import statsmodels.formula.api as smf
+import statsmodels.api as sm
+
+from scipy import stats
+from matplotlib import pyplot as plt
+
+
+# データロード
+beer = pd.read_csv("csv/5-1-1-beer.csv")
+
+
+# 1 分散分析とは -----------------------------------------------------------------------
 
 # ＜分散分析＞
 # - 分散分析とは正規線形モデルにおいて幅広く用いられる検定手法
@@ -53,27 +72,6 @@
 # - ｢効果｣とは天気がもたらす売上(Y)の変動のことを指す
 # - ｢誤差｣とは天気(X)という変数を用いて説明することが出来なかった売上の変動
 # - F値が大きければ誤差に比べて効果の影響が大きいと判断する
-
-
-
-
-# 1 準備 -------------------------------------------------------------------------------
-
-# ライブラリ
-import pandas as pd
-import numpy as np
-import scipy as sp
-import seaborn as sns
-
-import statsmodels.formula.api as smf
-import statsmodels.api as sm
-
-from scipy import stats
-from matplotlib import pyplot as plt
-
-
-# データロード
-beer = pd.read_csv("csv/5-1-1-beer.csv")
 
 
 # 2 データ作成 -------------------------------------------------------------------------
